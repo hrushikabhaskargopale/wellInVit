@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="WellnVIT – AI-powered health management and disease prediction system. Get personalized diagnoses based on your symptoms and patient profile.">
+    <title>WellnVIT – AI Health Management System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <a class="logo" onclick="showPage('home'); return false;" href="#">
+                <i class="fas fa-heartbeat"></i>
+                <span>WellnVIT</span>
+            </a>
+
+            <div class="hamburger" onclick="toggleMobileNav()">
+                <span></span><span></span><span></span>
+            </div>
+
+            <nav>
+                <ul id="nav-menu">
+                    <li><a href="#" onclick="showPage('home'); return false;" class="active-nav">Home</a></li>
+                    <li id="dashboard-nav-item" style="display:none"><a href="#"
+                            onclick="showPage('dashboard'); return false;">Dashboard</a></li>
+                    <li id="history-nav-item" style="display:none"><a href="#"
+                            onclick="showPage('history'); return false;">History</a></li>
+                    <li><a href="#" onclick="showPage('about'); return false;">About</a></li>
+                    <li><a href="#" onclick="showPage('contact'); return false;">Contact</a></li>
+                    <li id="login-nav-item"><a href="#" onclick="showPage('login'); return false;"
+                            id="login-link">Login</a></li>
+                    <li id="logout-nav-item"><a href="#" onclick="logout(); return false;" id="logout-link">Logout</a>
+                    </li>
+                    <li><button class="dark-mode-toggle" onclick="toggleDarkMode()" title="Toggle dark mode"><i
+                                class="fas fa-moon"></i></button></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+
+        <!-- ═══ Home ═══ -->
+        <div id="home" class="page active-page">
+            <div class="hero">
+                <div class="hero-text">
+                    <h1>Your Health,<br><span class="gradient-text">Powered by AI</span></h1>
+                    <p>WellnVIT combines patient vitals with advanced AI to deliver contextual disease predictions,
+                        personalized precautions, and tailored lifestyle recommendations.</p>
+                    <div class="hero-actions">
+                        <button class="btn" onclick="handleGetStarted()">
+                            <i class="fas fa-play"></i> Get Started
+                        </button>
+                        <button class="btn btn-outline" onclick="showPage('anonymize')">
+                            <i class="fas fa-user-secret"></i> Anonymize Data
+                        </button>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <img src="/static/images/image(1)(1)(1).png" alt="Healthcare powered by AI">
+                </div>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="icon-wrap"><i class="fas fa-user-md"></i></div>
+                    <h3>Health Assessment</h3>
+                    <p>Complete health evaluation using your symptoms and vital signs for accurate analysis.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon-wrap"><i class="fas fa-brain"></i></div>
+                    <h3>AI Diagnosis</h3>
+                    <p>Advanced ML model that considers your full patient profile for contextual predictions.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon-wrap"><i class="fas fa-heart"></i></div>
+                    <h3>Personalized Care</h3>
+                    <p>Tailored medication, diet, and workout recommendations based on your health profile.</p>
+                </div>
+            </div>
+
+            <div class="stats-bar">
+                <div class="stat-item">
+                    <span class="stat-number" data-target="100" data-suffix="+">0</span>
+                    <span class="stat-label">Diseases Covered</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" data-target="132" data-suffix="+">0</span>
+                    <span class="stat-label">Symptoms Tracked</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" data-target="4920" data-suffix="+">0</span>
+                    <span class="stat-label">Data Points</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ Anonymize Data ═══ -->
+        <div id="anonymize" class="page">
+            <div class="page-header">
+                <h1>Anonymize Data</h1>
+                <p>Upload a CSV file for privacy-safe anonymization</p>
+            </div>
+
+            <div class="form-container">
+                <div id="drop-zone" class="drop-zone">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p>Drag & drop your CSV here, or <span class="browse-link">browse</span></p>
+                    <input type="file" id="csv-upload-page" accept=".csv" style="display:none">
+                    <div class="file-preview"></div>
+                </div>
+
+                <button class="btn btn-block" onclick="uploadCSV()" style="margin-top: 20px;">
+                    <i class="fas fa-shield-alt"></i> Anonymize & Download
+                    <span class="spinner"></span>
+                </button>
+            </div>
+        </div>
+
+        <!-- ═══ Login ═══ -->
+        <div id="login" class="page">
+            <div class="page-header">
+                <h1>Welcome Back</h1>
+                <p>Log in to access your health management dashboard</p>
+            </div>
+
+            <div class="form-container">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-envelope field-icon"></i>
+                        <input type="email" id="email" placeholder="you@example.com">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-lock field-icon"></i>
+                        <input type="password" id="password" placeholder="Enter your password">
+                        <span class="toggle-password" onclick="togglePassword()">
+                            <i class="fas fa-eye"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <button class="btn btn-block" onclick="login()">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                    <span class="spinner"></span>
+                </button>
+
+                <p id="login-error" class="form-error" style="text-align:center; margin-top:14px;"></p>
+
+                <p style="text-align: center; margin-top: 22px; color: var(--text-muted); font-size: 14px;">
+                    Don't have an account? Contact your administrator.
+                </p>
+            </div>
+        </div>
+
+        <!-- ═══ Patient Details ═══ -->
+        <div id="patient-details" class="page">
+            <div class="stepper">
+                <div class="stepper-step active">
+                    <div class="step-num">1</div>
+                    <span>Patient Info</span>
+                </div>
+                <div class="stepper-connector"></div>
+                <div class="stepper-step">
+                    <div class="step-num">2</div>
+                    <span>Prediction</span>
+                </div>
+                <div class="stepper-connector"></div>
+                <div class="stepper-step">
+                    <div class="step-num">3</div>
+                    <span>Results</span>
+                </div>
+            </div>
+
+            <div class="page-header">
+                <h1>Patient Details</h1>
+                <p>Enter patient information for a contextual AI diagnosis</p>
+            </div>
+
+            <div class="form-container">
+                <div class="form-group">
+                    <label for="patient-id">Patient ID <span class="req">*</span></label>
+                    <input type="text" id="patient-id" placeholder="e.g. PAT-001">
+                </div>
+
+                <div class="form-group">
+                    <label for="patient-name">Full Name <span class="req">*</span></label>
+                    <input type="text" id="patient-name" placeholder="e.g. John Doe">
+                </div>
+
+                <div class="form-group">
+                    <label for="patient-age">Age <span class="req">*</span></label>
+                    <input type="number" id="patient-age" placeholder="Age in years" min="0" max="150">
+                </div>
+
+                <div class="form-group">
+                    <label>Gender <span class="req">*</span></label>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" id="gender-male" name="gender" value="male">
+                            Male
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" id="gender-female" name="gender" value="female">
+                            Female
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="patient-height">Height (cm) <span class="req">*</span></label>
+                    <input type="number" id="patient-height" placeholder="e.g. 175" min="0" max="300">
+                </div>
+
+                <div class="form-group">
+                    <label for="patient-weight">Weight (kg) <span class="req">*</span></label>
+                    <input type="number" id="patient-weight" placeholder="e.g. 70" min="0" max="500">
+                </div>
+
+                <div id="bmi-display" class="bmi-display">
+                    <div class="bmi-value">—</div>
+                    <div class="bmi-category">BMI</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="patient-bp">Blood Pressure (optional)</label>
+                    <input type="text" id="patient-bp" placeholder="e.g. 120/80">
+                </div>
+
+                <div class="form-group">
+                    <label for="patient-pulse">Pulse (optional)</label>
+                    <input type="number" id="patient-pulse" placeholder="e.g. 72 bpm">
+                </div>
+
+                <div class="form-group">
+                    <label for="patient-temp">Temperature (optional)</label>
+                    <input type="text" id="patient-temp" placeholder="e.g. 98.6°F">
+                </div>
+
+                <button class="btn btn-block" onclick="submitData()">
+                    <i class="fas fa-arrow-right"></i> Continue to Prediction
+                    <span class="spinner"></span>
+                </button>
+            </div>
+        </div>
+
+        <!-- ═══ Success ═══ -->
+        <div id="success" class="page">
+            <div class="stepper">
+                <div class="stepper-step completed">
+                    <div class="step-num"><i class="fas fa-check"></i></div>
+                    <span>Patient Info</span>
+                </div>
+                <div class="stepper-connector completed"></div>
+                <div class="stepper-step active">
+                    <div class="step-num">2</div>
+                    <span>Prediction</span>
+                </div>
+                <div class="stepper-connector"></div>
+                <div class="stepper-step">
+                    <div class="step-num">3</div>
+                    <span>Results</span>
+                </div>
+            </div>
+
+            <div class="success-container">
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h2>Patient Data Saved!</h2>
+                <p style="color: var(--text-muted); margin-top: 8px;">
+                    Your patient profile has been stored and will be used for a contextual AI diagnosis.
+                </p>
+                <div style="margin-top: 28px;">
+                    <button class="btn" onclick="showPage('disease-prediction')">
+                        <i class="fas fa-stethoscope"></i> Continue to Disease Prediction
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ Disease Prediction ═══ -->
+        <div id="disease-prediction" class="page">
+            <div class="stepper">
+                <div class="stepper-step completed">
+                    <div class="step-num"><i class="fas fa-check"></i></div>
+                    <span>Patient Info</span>
+                </div>
+                <div class="stepper-connector completed"></div>
+                <div class="stepper-step active">
+                    <div class="step-num">2</div>
+                    <span>Prediction</span>
+                </div>
+                <div class="stepper-connector"></div>
+                <div class="stepper-step">
+                    <div class="step-num">3</div>
+                    <span>Results</span>
+                </div>
+            </div>
+
+            <div class="page-header">
+                <h1>Disease Prediction</h1>
+                <p>Enter symptoms for an AI-powered analysis</p>
+            </div>
+
+            <div class="prediction-container">
+                <!-- Patient Context Banner -->
+                <div id="patient-banner" class="patient-banner">
+                    <i class="fas fa-user-circle"></i>
+                    <div class="banner-text">
+                        <strong>Patient</strong>
+                        <span></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="symptom-input">Describe Your Symptoms</label>
+                    <div id="symptom-chips" class="symptom-chips"></div>
+                    <div class="symptom-input-area">
+                        <input type="text" id="symptom-input" placeholder="Type a symptom (e.g. headache, fever)..."
+                            autocomplete="off">
+                        <div id="autocomplete-dropdown" class="autocomplete-dropdown"></div>
+                    </div>
+                    <div id="char-counter" class="char-counter">0 characters</div>
+                    <textarea id="symptoms" name="symptoms" style="display:none"></textarea>
+                </div>
+
+                <button class="btn btn-block btn-analyze" onclick="analyzeSymptoms()">
+                    <i class="fas fa-search-plus"></i> Analyze Symptoms
+                    <span class="spinner"></span>
+                </button>
+
+                <!-- Results -->
+                <div id="results-container" class="results-container" style="display:none;">
+                    <h2><i class="fas fa-clipboard-list"></i> AI Analysis Results</h2>
+
+                    <div class="result-card card-disease">
+                        <h3><i class="fas fa-virus"></i> Predicted Disease</h3>
+                        <p id="disease-result"></p>
+                    </div>
+
+                    <div class="result-card card-precaution">
+                        <h3><i class="fas fa-pills"></i> Precautions &amp; Medications</h3>
+                        <p id="precaution-result"></p>
+                    </div>
+
+                    <div class="result-card card-diet">
+                        <h3><i class="fas fa-apple-alt"></i> Diet &amp; Workout</h3>
+                        <p id="diet-result"></p>
+                    </div>
+
+                    <p style="font-size: 12px; color: var(--text-light); text-align: center; margin-top: 16px;">
+                        <i class="fas fa-info-circle"></i> This diagnosis accounts for the patient's stored profile
+                        (age, BMI, vitals).
+                        For educational purposes only.
+                    </p>
+                </div>
+
+                <div id="predict-again-btn" style="display:none; margin-top: 16px;">
+                    <button class="btn btn-outline btn-block" onclick="predictAgain()">
+                        <i class="fas fa-redo"></i> Predict Again
+                    </button>
+                </div>
+
+                <div id="print-report-btn" style="display:none; margin-top: 8px;">
+                    <button class="btn btn-outline btn-block" onclick="printReport()">
+                        <i class="fas fa-print"></i> Download / Print Report
+                    </button>
+                </div>
+
+                <!-- Loading -->
+                <div id="predict-loading" style="display:none; text-align:center; margin-top:32px;">
+                    <div class="loading-dots">
+                        <span></span><span></span><span></span>
+                    </div>
+                    <p style="color: var(--text-muted); margin-top: 12px; font-size: 14px;">
+                        Analyzing symptoms with ML model...
+                    </p>
+                </div>
+
+                <p id="predict-error" class="form-error"
+                    style="display:none; text-align:center; margin-top:16px; font-size: 14px;"></p>
+            </div>
+        </div>
+
+        <!-- ═══ Dashboard ═══ -->
+        <div id="dashboard" class="page">
+            <div class="page-header">
+                <h1>Health Dashboard</h1>
+                <p>Overview of your patient profile and vitals</p>
+            </div>
+            <div id="dashboard-content">
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <h3 style="text-align:center; margin-bottom:16px; font-weight:700; color:var(--text);">BMI Gauge
+                        </h3>
+                        <div class="bmi-gauge">
+                            <div class="bmi-gauge-bg">
+                                <div class="bmi-gauge-inner"></div>
+                                <div id="gauge-needle" class="bmi-gauge-needle"></div>
+                            </div>
+                        </div>
+                        <div id="gauge-label" class="bmi-gauge-label">—</div>
+                        <div id="gauge-sublabel" class="bmi-gauge-sublabel">BMI</div>
+                    </div>
+                    <div class="dashboard-card">
+                        <h3 style="margin-bottom:16px; font-weight:700; color:var(--text);">Patient Vitals</h3>
+                        <div class="vitals-grid">
+                            <div class="vital-item">
+                                <i class="fas fa-user"></i>
+                                <div id="vital-age" class="vital-value">—</div>
+                                <div class="vital-label">Age</div>
+                            </div>
+                            <div class="vital-item">
+                                <i class="fas fa-venus-mars"></i>
+                                <div id="vital-gender" class="vital-value">—</div>
+                                <div class="vital-label">Gender</div>
+                            </div>
+                            <div class="vital-item">
+                                <i class="fas fa-heartbeat"></i>
+                                <div id="vital-bp" class="vital-value">—</div>
+                                <div class="vital-label">Blood Pressure</div>
+                            </div>
+                            <div class="vital-item">
+                                <i class="fas fa-wave-square"></i>
+                                <div id="vital-pulse" class="vital-value">—</div>
+                                <div class="vital-label">Pulse</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashboard-card full-width">
+                        <h3 style="margin-bottom:16px; font-weight:700; color:var(--text);">Additional Info</h3>
+                        <div class="vitals-grid">
+                            <div class="vital-item">
+                                <i class="fas fa-thermometer-half"></i>
+                                <div id="vital-temp" class="vital-value">—</div>
+                                <div class="vital-label">Temperature</div>
+                            </div>
+                            <div class="vital-item">
+                                <i class="fas fa-ruler-vertical"></i>
+                                <div id="vital-height" class="vital-value">—</div>
+                                <div class="vital-label">Height</div>
+                            </div>
+                            <div class="vital-item">
+                                <i class="fas fa-weight"></i>
+                                <div id="vital-weight" class="vital-value">—</div>
+                                <div class="vital-label">Weight</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ History ═══ -->
+        <div id="history" class="page">
+            <div class="page-header">
+                <h1>Prediction History</h1>
+                <p>Your past AI diagnoses in this session</p>
+            </div>
+            <div class="history-container">
+                <div id="history-content"></div>
+                <div id="history-actions" class="history-actions" style="display:none;">
+                    <button class="btn btn-outline" onclick="clearHistory()">
+                        <i class="fas fa-trash"></i> Clear History
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ About ═══ -->
+        <div id="about" class="page">
+            <div class="page-header">
+                <h1>About WellnVIT</h1>
+                <p>Our mission to revolutionize healthcare with AI</p>
+            </div>
+
+            <div class="content-card">
+                <h2>Our Mission</h2>
+                <p>WellnVIT is dedicated to revolutionizing healthcare through advanced AI technology. Our mission
+                    is to make healthcare more accessible, accurate, and personalized for everyone.</p>
+
+                <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+                    alt="Healthcare Technology">
+
+                <h2>What We Do</h2>
+                <p>We provide an intelligent health management system that combines patient vitals with AI-powered
+                    analysis. By considering your age, BMI, blood pressure, and other health indicators alongside
+                    your symptoms, we deliver more accurate and personalized predictions.</p>
+
+                <h2>Our Technology</h2>
+                <p>Using advanced machine learning and contextual patient profiling, WellnVIT offers insights that can
+                    help in early detection of health issues, potentially saving lives and improving quality of life.
+                    Every diagnosis considers the full patient profile for maximum accuracy.</p>
+            </div>
+        </div>
+
+        <!-- ═══ Contact ═══ -->
+        <div id="contact" class="page">
+            <div class="page-header">
+                <h1>Contact Us</h1>
+                <p>Get in touch with the WellnVIT team</p>
+            </div>
+
+            <div class="content-card">
+                <h2>Contact Information</h2>
+                <p>If you have any questions or need support, please reach out to us:</p>
+
+                <div class="contact-grid">
+                    <div class="contact-item">
+                        <h3><i class="fas fa-envelope"></i> Email</h3>
+                        <p>hrushika.bhaskar@gmail.com</p>
+                    </div>
+                    <div class="contact-item">
+                        <h3><i class="fas fa-phone"></i> Phone</h3>
+                        <p>+91 73396 66769</p>
+                    </div>
+                    <div class="contact-item">
+                        <h3><i class="fas fa-map-marker-alt"></i> Address</h3>
+                        <p>VIT Bhopal University, Bhopal-Indore Highway, Kothrikalan, Sehore, Madhya Pradesh – 466114.
+                        </p>
+                    </div>
+                </div>
+
+                <h2 style="margin-top: 40px;">Send us a Message</h2>
+                <div class="form-group">
+                    <label for="contact-name">Your Name</label>
+                    <input type="text" id="contact-name" placeholder="John Doe">
+                </div>
+                <div class="form-group">
+                    <label for="contact-email">Your Email</label>
+                    <input type="email" id="contact-email" placeholder="you@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" rows="4" placeholder="How can we help?"></textarea>
+                </div>
+                <button class="btn" onclick="sendContactMessage()">
+                    <i class="fas fa-paper-plane"></i> Send Message
+                    <span class="spinner"></span>
+                </button>
+            </div>
+        </div>
+
+    </div><!-- /container -->
+
+    <!-- Medical Disclaimer Modal -->
+    <div id="disclaimer-modal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <div class="modal-icon"><i class="fas fa-notes-medical"></i></div>
+            <h2>Medical Disclaimer</h2>
+            <p>WellnVIT is designed for <strong>educational purposes only</strong>. It is not a substitute for
+                professional medical advice, diagnosis, or treatment. Always seek the advice of your physician or
+                qualified health provider with any questions you may have regarding a medical condition.</p>
+            <button class="btn" onclick="acceptDisclaimer()">
+                <i class="fas fa-check"></i> I Understand
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo-footer">
+                        <i class="fas fa-heartbeat"></i> WellnVIT
+                    </div>
+                    <p>AI-powered health management and disease prediction system. Built for smarter, personalized
+                        healthcare.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#" onclick="showPage('home'); return false;">Home</a></li>
+                        <li><a href="#" onclick="showPage('about'); return false;">About</a></li>
+                        <li><a href="#" onclick="showPage('contact'); return false;">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h4>Follow Us</h4>
+                    <div class="social-icons">
+                        <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" title="GitHub"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 WellnVIT. All rights reserved. Built with Flask &amp; Machine Learning.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/static/js/app.js"></script>
+</body>
+
+</html>

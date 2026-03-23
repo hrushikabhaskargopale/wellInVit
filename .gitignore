@@ -1,0 +1,15 @@
+venv/
+.venv/
+env/
+site-packages/
+__pycache__/
+*.pkl
+cookie.txt
+flask_log.txt
+.env
+*.pyc
+
+# Antigravity extensions
+.antigravity/
+vscjava.vscode-java-pack-*/
+

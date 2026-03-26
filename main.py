@@ -19,7 +19,7 @@ app = Flask(__name__)
 app.secret_key = "wellnvit-secret-key-2026"   # sign session cookies
 
 # ── Gemini ─────────────────────────────────────────────────────────────────────
-genai.configure(api_key="")
+genai.configure(api_key="AIzaSyCJo8yyJWIoZ8ztbUH9g6yQW3rF64EnUig")
 model = genai.GenerativeModel("gemini-3.1-flash-lite-preview")
 
 # ── Load symptom list from CSV ─────────────────────────────────────────────────────
@@ -46,7 +46,7 @@ login_manager.login_view = "index"   # redirect unauthenticated browser GETs her
 
 # Hardcoded user store  {email: {password, name, role}}
 USERS = {
-    "doctor@wellnvit.com": {"password": "doctor123", "name": "Dr. Smith",  "role": "Doctor"},
+    "doctor@wellnvit.com": {"password": "doctor123", "name": "Dr. Hrushika",  "role": "Doctor"},
     "admin@wellnvit.com":  {"password": "admin123",  "name": "Admin",      "role": "Admin"},
 }
 

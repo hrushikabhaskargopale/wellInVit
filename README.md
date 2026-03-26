@@ -49,5 +49,3 @@ The application uses the following hardcoded credentials for demonstration:
 - **Doctor:** email: `doctor@wellnvit.com`, password: `doctor123`
 - **Admin:** email: `admin@wellnvit.com`, password: `admin123`
 
-## Note on API Keys
-The application uses the `google-generativeai` package and currently relies on an API key hardcoded in `main.py`. For better security in a public repository, you should consider moving the API key to a `.env` file and loading it using a library like `python-dotenv`.

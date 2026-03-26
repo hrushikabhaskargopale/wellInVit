@@ -19,7 +19,7 @@ app = Flask(__name__)
 app.secret_key = "wellnvit-secret-key-2026"   # sign session cookies
 
 # ── Gemini ─────────────────────────────────────────────────────────────────────
-genai.configure(api_key="AIzaSyCJo8yyJWIoZ8ztbUH9g6yQW3rF64EnUig")
+genai.configure(api_key=os.environ.get("GEMINI_API_KEY"))
 model = genai.GenerativeModel("gemini-3.1-flash-lite-preview")
 
 # ── Load symptom list from CSV ─────────────────────────────────────────────────────

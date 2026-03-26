@@ -1,3 +1,7 @@
+# Link to Hosted Website
+
+https://wellinvit.onrender.com/
+
 # Wellnvit Capstone
 
 This is a Flask-based medical AI assistant web application that uses Google's Gemini API for disease prediction based on symptoms. It also includes data anonymization features.

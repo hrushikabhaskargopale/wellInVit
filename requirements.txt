@@ -2,3 +2,4 @@ flask
 flask-login
 google-generativeai
 pandas
+gunicorn
